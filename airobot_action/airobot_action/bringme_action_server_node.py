@@ -1,8 +1,7 @@
 import time, random
-import threading
 import rclpy
 from rclpy.node import Node
-from rclpy.action import ActionServer, GoalResponse
+from rclpy.action import ActionServer
 from airobot_interfaces.action import StringCommand  # カスタムアクション定義のインポート
 
 
