@@ -25,15 +25,12 @@ class BringmeActionServer(Node):
             count -= 1  
             time.sleep(1)
 
+        item = goal_handle.request.command
         result = StringCommand.Result()
-        for item in self.food:
-            if item in goal_handle.request.command:
-                result.answer =f'はい，{item}です．'
-                goal_handle.succeed()
-                self.get_logger().info(f"ゴールの結果: {result.answer}")
-                return result
-        
-        result.answer = f'{goal_handle.request.command}を見つけることができませんでした．'
+        if item in self.food:
+            result.answer =f'はい，{item}です．'
+        else:
+            result.answer = f'{item}を見つけることができませんでした．'
         goal_handle.succeed()
         self.get_logger().info(f"ゴールの結果: {result.answer}")
         return result
