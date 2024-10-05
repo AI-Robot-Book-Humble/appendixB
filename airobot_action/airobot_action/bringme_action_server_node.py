@@ -41,6 +41,8 @@ class BringmeActionServer(Node):
 def main(args=None):
     rclpy.init(args=args)
     bringme_action_server = BringmeActionServer()
-    rclpy.spin(bringme_action_server)
-    bringme_action_server.destroy_node()
-    rclpy.shutdown()
+    try:
+        rclpy.spin(bringme_action_server)
+    except KeyboardInterrupt:
+        pass
+    rclpy.try_shutdown()
