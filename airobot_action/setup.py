@@ -22,6 +22,8 @@ setup(
         'console_scripts': [
             'bringme_action_client_node = airobot_action.bringme_action_client_node:main',
             'bringme_action_server_node = airobot_action.bringme_action_server_node:main',
+            'new_bringme_action_server_node = airobot_action.new_bringme_action_server_node:main',
+            'test_client = airobot_action.test_client:main',
         ],
     },
 )
