@@ -38,8 +38,10 @@ class BringmeActionServer(Node):
 def main(args=None):
     rclpy.init(args=args)
     bringme_action_server = BringmeActionServer()
+    print('サーバ開始')
     try:
         rclpy.spin(bringme_action_server)
     except KeyboardInterrupt:
         pass
     rclpy.try_shutdown()
+    print('サーバ終了')
