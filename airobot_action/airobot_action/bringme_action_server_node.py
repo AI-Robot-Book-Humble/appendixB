@@ -36,8 +36,8 @@ class BringmeActionServer(Node):
         return result
 
 
-def main(args=None):
-    rclpy.init(args=args)
+def main():
+    rclpy.init()
     bringme_action_server = BringmeActionServer()
     print('サーバ開始')
     try:

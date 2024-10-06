@@ -71,8 +71,8 @@ class BringmeActionServer(Node):
         return CancelResponse.ACCEPT
 
 
-def main(args=None):
-    rclpy.init(args=args)
+def main():
+    rclpy.init()
     bringme_action_server = BringmeActionServer()
     print('サーバ開始')
     executor = MultiThreadedExecutor()
