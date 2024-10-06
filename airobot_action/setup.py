@@ -24,6 +24,7 @@ setup(
             'bringme_action_server_node = airobot_action.bringme_action_server_node:main',
             'new_bringme_action_server_node = airobot_action.new_bringme_action_server_node:main',
             'test_client = airobot_action.test_client:main',
+            'test_server = airobot_action.test_server:main',
         ],
     },
 )
