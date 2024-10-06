@@ -16,7 +16,7 @@ class BringmeActionServer(Node):
 
     def execute_callback(self, goal_handle):
         feedback = StringCommand.Feedback()
-        count = random.randint(10, 20)
+        count = random.randint(5, 10)
 
         while count > 0:
             self.get_logger().info(f"フィードバック送信中: 残り{count}[s]")     
