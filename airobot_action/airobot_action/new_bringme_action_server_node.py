@@ -75,10 +75,10 @@ def main(args=None):
     rclpy.init(args=args)
     bringme_action_server = BringmeActionServer()
     print('サーバ開始')
-    # 処理中にキャンセルや新たなゴールを受け付けるには，MultiThreadedExecutorが必要
     executor = MultiThreadedExecutor()
     try:
-        rclpy.spin(bringme_action_server, executor=executor)
+        # 処理中にキャンセルや新たなゴールを受け付けるには，MultiThreadedExecutorが必要
+        rclpy.spin(bringme_action_server, executor=MultiThreadedExecutor())
     except KeyboardInterrupt:
         pass
     rclpy.try_shutdown()
