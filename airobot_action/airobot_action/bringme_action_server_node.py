@@ -10,7 +10,7 @@ class BringmeActionServer(Node):
         super().__init__('bringme_action_server')
         self._action_server = ActionServer(
             self, StringCommand, 'command', 
-            execute_callback=self.execute_callback            
+            execute_callback=self.execute_callback,
         )
         self.food = ['apple', 'banana', 'candy']
 
@@ -34,6 +34,7 @@ class BringmeActionServer(Node):
         goal_handle.succeed()
         self.get_logger().info(f"ゴールの結果: {result.answer}")
         return result
+
 
 def main(args=None):
     rclpy.init(args=args)
