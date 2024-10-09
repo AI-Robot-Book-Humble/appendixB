@@ -3,8 +3,8 @@ import sys
 import readline  # input()に履歴機能を追加するために必要
 import threading
 import rclpy
-from rclpy.action import ActionClient
 from rclpy.node import Node
+from rclpy.action import ActionClient
 from rclpy.utilities import remove_ros_args
 from action_msgs.msg import GoalStatus
 from airobot_interfaces.action import StringCommand
@@ -50,14 +50,6 @@ class TestClient(Node):
         else:
             self.get_logger().info(f'失敗ステータス: {status}')
 
-    def cancel_done(self, future):
-        cancel_response = future.result()
-        if len(cancel_response.goals_canceling) > 0:
-            self.get_logger().info('キャンセル成功')
-            self.goal_handle = None
-        else:
-            self.get_logger().info('キャンセル失敗')
-
     def cancel(self):
         if self.goal_handle is None:
             self.get_logger().info('キャンセル対象なし')
@@ -65,6 +57,14 @@ class TestClient(Node):
         self.get_logger().info('キャンセル')
         future = self.goal_handle.cancel_goal_async()
         future.add_done_callback(self.cancel_done)
+
+    def cancel_done(self, future):
+        cancel_response = future.result()
+        if len(cancel_response.goals_canceling) > 0:
+            self.get_logger().info('キャンセル成功')
+            self.goal_handle = None
+        else:
+            self.get_logger().info('キャンセル失敗')
 
 
 def main():
@@ -82,13 +82,8 @@ def main():
   サーバが実行中に次のゴールを送ることができる
   行履歴・行編集の機能あり''')
 
-    # ROSクライアントの初期化
     rclpy.init()
-
-    # ノードクラスのインスタンス
     node = TestClient(action_name)
-
-    # 別のスレッドでrclpy.spin()を実行する
     thread = threading.Thread(target=rclpy.spin, args=(node,))
     threading.excepthook = lambda x: ()
     thread.start()

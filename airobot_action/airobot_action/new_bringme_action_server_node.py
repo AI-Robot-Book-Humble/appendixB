@@ -19,35 +19,31 @@ class BringmeActionServer(Node):
             execute_callback=self.execute_callback,
             cancel_callback=self.cancel_callback,
             handle_accepted_callback=self.handle_accepted_callback,
-            # 処理中にキャンセルや新たなゴールを受け付けるには，
-            # ReentrantCallbackGroupが必要
             callback_group=ReentrantCallbackGroup(),
         )
         self.food = ['apple', 'banana', 'candy']
 
     def handle_accepted_callback(self, goal_handle):
         with self.goal_lock:
-            # 同時に2つ以上のゴールを処理しないように排他制御
             if self.goal_handle is not None and self.goal_handle.is_active:
-                self.get_logger().info('前の処理を中止')
+                self.get_logger().info('前の処理を中断')
                 self.goal_handle.abort()
             self.goal_handle = goal_handle
         goal_handle.execute()
 
     def execute_callback(self, goal_handle):
         with self.execute_lock:
-            # 同時に2つ以上の実行をしないように排他制御
             feedback = StringCommand.Feedback()
             result = StringCommand.Result()
             count = random.randint(5, 10)
 
             while count > 0:
                 if not goal_handle.is_active:
-                    self.get_logger().info('中止')
+                    self.get_logger().info('中断処理')
                     return result
 
                 if goal_handle.is_cancel_requested:
-                    self.get_logger().info('キャンセル')
+                    self.get_logger().info('キャンセル処理')
                     goal_handle.canceled()
                     return result
 
@@ -75,9 +71,7 @@ def main():
     rclpy.init()
     bringme_action_server = BringmeActionServer()
     print('サーバ開始')
-    executor = MultiThreadedExecutor()
     try:
-        # 処理中にキャンセルや新たなゴールを受け付けるには，MultiThreadedExecutorが必要
         rclpy.spin(bringme_action_server, executor=MultiThreadedExecutor())
     except KeyboardInterrupt:
         pass
