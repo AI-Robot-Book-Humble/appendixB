@@ -28,6 +28,9 @@ class TestClient(Node):
             goal_msg, feedback_callback=self.feedback_callback)
         self.send_goal_future.add_done_callback(self.goal_response_callback)
 
+    def feedback_callback(self, feedback_msg):
+        self.get_logger().info(f'フィードバック: \'{feedback_msg.feedback.process}\'')
+
     def goal_response_callback(self, future):
         goal_handle = future.result()
         if not goal_handle.accepted:
@@ -38,17 +41,14 @@ class TestClient(Node):
         self.get_result_future = goal_handle.get_result_async()
         self.get_result_future.add_done_callback(self.get_result_callback)
 
-    def feedback_callback(self, feedback_msg):
-        self.get_logger().info(f'フィードバック: \'{feedback_msg.feedback.process}\'')
-
     def get_result_callback(self, future):
         result = future.result().result
         status = future.result().status
         if status == GoalStatus.STATUS_SUCCEEDED:
             self.get_logger().info(f'結果: {result.answer}')
-            self.goal_handle = None
         else:
             self.get_logger().info(f'失敗ステータス: {status}')
+        self.goal_handle = None
 
     def cancel(self):
         if self.goal_handle is None:
