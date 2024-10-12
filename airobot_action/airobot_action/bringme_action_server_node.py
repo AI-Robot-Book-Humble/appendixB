@@ -19,7 +19,7 @@ class BringmeActionServer(Node):
         count = random.randint(5, 10)
 
         while count > 0:
-            self.get_logger().info(f"フィードバック送信中: 残り{count}[s]")     
+            self.get_logger().info(f'フィードバック送信中: 残り{count}[s]')     
             feedback.process = f'{count}'
             goal_handle.publish_feedback(feedback)  
             count -= 1  
@@ -32,7 +32,7 @@ class BringmeActionServer(Node):
         else:
             result.answer = f'{item}を見つけることができませんでした．'
         goal_handle.succeed()
-        self.get_logger().info(f"ゴールの結果: {result.answer}")
+        self.get_logger().info(f'ゴールの結果: {result.answer}')
         return result
 
 
