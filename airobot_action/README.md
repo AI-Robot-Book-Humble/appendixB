@@ -75,7 +75,7 @@ This project is licensed under the Apache License 2.0 license found in the LICEN
   - 一度に１個だけのゴールを処理するサーバ [server_single_goal](https://github.com/ros2/examples/blob/humble/rclpy/actions/minimal_action_server/examples_rclpy_minimal_action_server/server_single_goal.py)
   - 受け付けたゴールをキューに入れるサーバ[server_queue_goals](https://github.com/ros2/examples/blob/humble/rclpy/actions/minimal_action_server/examples_rclpy_minimal_action_server/server_queue_goals.py)
   - 複数のゴールを並行処理するサーバ[server](https://github.com/ros2/examples/blob/humble/rclpy/actions/minimal_action_server/examples_rclpy_minimal_action_server/server.py)
-  - 複数のゴールを延期して？並行処理するサーバ[server_defer](https://github.com/ros2/examples/blob/humble/rclpy/actions/minimal_action_server/examples_rclpy_minimal_action_server/server_defer.py)
+  - 複数のゴールを延期して並行処理するサーバ[server_defer](https://github.com/ros2/examples/blob/humble/rclpy/actions/minimal_action_server/examples_rclpy_minimal_action_server/server_defer.py)
   - ノードのクラスを作らないサーバ [server_not_composable](https://github.com/ros2/examples/blob/humble/rclpy/actions/minimal_action_server/examples_rclpy_minimal_action_server/server_not_composable.py)
 - [minimal_action_client パッケージ](https://github.com/ros2/examples/tree/humble/rclpy/actions/minimal_action_client)
   - 最低限のクライアント [client](https://github.com/ros2/examples/blob/humble/rclpy/actions/minimal_action_client/examples_rclpy_minimal_action_client/client.py)
