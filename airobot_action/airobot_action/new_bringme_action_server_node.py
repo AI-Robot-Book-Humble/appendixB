@@ -24,12 +24,12 @@ class BringmeActionServer(Node):
         self.food = ['apple', 'banana', 'candy']
 
     def handle_accepted_callback(self, goal_handle):
-        with self.goal_lock:               # ブロック内を二重実行させない
+        with self.goal_lock:                # ブロック内を二重実行させない
             if self.goal_handle is not None and self.goal_handle.is_active:
                 self.get_logger().info('前の処理を中断')
                 self.goal_handle.abort()
-            self.goal_handle = goal_handle # ゴール情報の更新
-        goal_handle.execute()              # ゴール処理の実行
+            self.goal_handle = goal_handle  # ゴール情報の更新
+        goal_handle.execute()               # ゴール処理の実行
 
     def execute_callback(self, goal_handle):
         with self.execute_lock:            # ブロック内を二重実行させない
