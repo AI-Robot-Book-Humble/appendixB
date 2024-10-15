@@ -11,9 +11,9 @@ from airobot_interfaces.action import StringCommand  # カスタムアクショ�
 class BringmeActionServer(Node):
     def __init__(self):
         super().__init__('bringme_action_server')
-        self.goal_handle = None
-        self.goal_lock = Lock()
-        self.execute_lock = Lock()
+        self.goal_handle = None    # 処理中のゴールの情報を保持する変数
+        self.goal_lock = Lock()    # 二重実行させないためのロック変数
+        self.execute_lock = Lock() # 二重実行させないためのロック変数
         self._action_server = ActionServer(
             self, StringCommand, 'command', 
             execute_callback=self.execute_callback,
@@ -24,15 +24,15 @@ class BringmeActionServer(Node):
         self.food = ['apple', 'banana', 'candy']
 
     def handle_accepted_callback(self, goal_handle):
-        with self.goal_lock:
+        with self.goal_lock:               # ブロック内を二重実行させない
             if self.goal_handle is not None and self.goal_handle.is_active:
                 self.get_logger().info('前の処理を中断')
                 self.goal_handle.abort()
-            self.goal_handle = goal_handle
-        goal_handle.execute()
+            self.goal_handle = goal_handle # ゴール情報の更新
+        goal_handle.execute()              # ゴール処理の実行
 
     def execute_callback(self, goal_handle):
-        with self.execute_lock:
+        with self.execute_lock:            # ブロック内を二重実行させない
             feedback = StringCommand.Feedback()
             result = StringCommand.Result()
             count = random.randint(5, 10)

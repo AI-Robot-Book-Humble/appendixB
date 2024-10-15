@@ -14,7 +14,7 @@ class TestClient(Node):
     def __init__(self, action_name):
         super().__init__('test_client')
         self.get_logger().info(f'{action_name}のクライアントを起動します．')
-        self.goal_handle = None
+        self.goal_handle = None  # 処理中のゴールの情報を保持する変数
         self.action_client = ActionClient(
             self, StringCommand, action_name)
         while not self.action_client.wait_for_server(timeout_sec=1.0):
@@ -36,7 +36,7 @@ class TestClient(Node):
         if not goal_handle.accepted:
             self.get_logger().info('ゴールは拒否されました')
             return
-        self.goal_handle = goal_handle
+        self.goal_handle = goal_handle  # ゴールの情報を更新
         self.get_logger().info('ゴールは受け付けられました')
         self.get_result_future = goal_handle.get_result_async()
         self.get_result_future.add_done_callback(self.get_result_callback)
@@ -48,7 +48,7 @@ class TestClient(Node):
             self.get_logger().info(f'結果: {result.answer}')
         else:
             self.get_logger().info(f'失敗ステータス: {status}')
-        self.goal_handle = None
+        self.goal_handle = None  # ゴール情報をリセット
 
     def cancel(self):
         if self.goal_handle is None:
@@ -62,15 +62,15 @@ class TestClient(Node):
         cancel_response = future.result()
         if len(cancel_response.goals_canceling) > 0:
             self.get_logger().info('キャンセル成功')
-            self.goal_handle = None
+            self.goal_handle = None  # ゴール情報をリセット
         else:
             self.get_logger().info('キャンセル失敗')
 
 
 def main():
-    action_name = 'command'
-    args = remove_ros_args(args=sys.argv)
-    if len(args) >= 2:
+    action_name = 'command'                # アクション名のデフォルト値
+    args = remove_ros_args(args=sys.argv)  # コマンドラインの引数からROS用を取り除く
+    if len(args) >= 2:                     # 引数の1番目をアクション名に設定
         action_name = args[1]
     history_path = '.history' + '_' + action_name.replace('/', '_')
     if os.path.isfile(history_path):
@@ -91,11 +91,11 @@ def main():
     try:
         while True:
             command = input('command: ')
-            if command == '':
+            if command == '':        # Enterキーだけを押した場合はキャンセル
                 node.cancel()
-            elif command == 'exit':
+            elif command == 'exit':  # exitの場合は終了
                 break
-            else:
+            else:                    # それ以外は，文字列をそのままゴールとして送信
                 node.send_goal(command)
     except KeyboardInterrupt:
         pass
