@@ -28,7 +28,7 @@
 - パッケージをビルド
   ```
   cd ~/airobot_ws
-  colcon build --symlink-install
+  colcon build
   source install/setup.bash
   ```
 
