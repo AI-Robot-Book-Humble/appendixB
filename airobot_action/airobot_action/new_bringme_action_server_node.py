@@ -55,9 +55,9 @@ class BringmeActionServer(Node):
 
             item = goal_handle.request.command
             if item in self.food:
-                result.answer =f'はい，{item}です．'
+                result.answer =f'はい，{item}です'
             else:
-                result.answer = f'{item}を見つけることができませんでした．'
+                result.answer = f'{item}を見つけることができませんでした'
             goal_handle.succeed()
             self.get_logger().info(f'ゴールの結果: {result.answer}')
             return result

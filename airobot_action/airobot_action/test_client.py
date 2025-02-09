@@ -13,7 +13,7 @@ from airobot_interfaces.action import StringCommand
 class TestClient(Node):
     def __init__(self, action_name):
         super().__init__('test_client')
-        self.get_logger().info(f'{action_name}のクライアントを起動します．')
+        self.get_logger().info(f'{action_name}のクライアントを起動します')
         self.goal_handle = None  # 処理中のゴールの情報を保持する変数
         self.action_client = ActionClient(
             self, StringCommand, action_name)
