@@ -60,7 +60,7 @@
 
 ## ライセンス
 
-Copyright (c) 2024 MASUTANI Yasuhiro  
+Copyright (c) 2025 MASUTANI Yasuhiro  
 All rights reserved.  
 This project is licensed under the Apache License 2.0 license found in the LICENSE file in the root directory of this project.
 
